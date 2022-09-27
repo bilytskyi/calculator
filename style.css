@@ -1,7 +1,12 @@
 .display {
     background-color: aqua;
     height: 100px;
-    width: 400px;
+    width: 380px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 36px;
+    padding: 10px;
 }
 
 .button {
@@ -23,7 +28,7 @@
 }
 
 .calculator {
-    border: solid black 1px;
+    border: solid black;
 }
 
 .main {
