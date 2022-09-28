@@ -30,12 +30,14 @@ function operate(operator, a, b) {
 function populate() {
     let arr = [];
     let operator = "";
+    let a = 0;
+    let b = 0;
     const display = document.querySelector('.display');
     const buttons = document.querySelectorAll('.button');
     buttons.forEach((button) => {
         button.addEventListener('click', () => {
             if (button.getAttribute('type') == "number") {
-                if (display.textContent == "0") {
+                if (display.textContent == "0" || operator != "") {
                     display.textContent = button.getAttribute('value');
                 }
                 else {
@@ -44,16 +46,29 @@ function populate() {
             }
             if (button.getAttribute('type') == "clear") {
                 display.textContent = "0";
+                arr = [];
             }
             if (button.getAttribute('type') == "operator") {
-                arr.push(display.textContent);
-                operator = button.getAttribute('value');
-                display.textContent = "0";
+                if (arr.length == 0) {
+                    a = display.textContent;
+                    arr.push(a);
+                    operator = button.getAttribute('value');
+                    display.textContent = "0";
+                }
+                else {
+                    b = display.textContent;
+                    arr.push(b);
+                    b = parseInt(arr.slice(-1));
+                    a = parseInt(arr.slice(-2, -1));
+                    display.textContent = operate(operator, a, b);
+                    arr.push(operate(operator, a, b));
+                    operator = button.getAttribute('value');
+                }
             }
             if (button.getAttribute('value') == "=") {
                 arr.push(display.textContent);
-                let b = parseInt(arr.slice(-1));
-                let a = parseInt(arr.slice(-2, -1));
+                b = parseInt(arr.slice(-1));
+                a = parseInt(arr.slice(-2, -1));
                 display.textContent = operate(operator, a, b);
             }
         });
